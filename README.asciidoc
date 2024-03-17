@@ -1,7 +1,0 @@
-= Archive
-NOTE:: I think I lost some files and its not working anymore and the AI is incomplete, not going to fix it
-
-= How to use 
-
-= LICENSE
-This project is signed under LGPL and it can be seen and edited by anyone including students

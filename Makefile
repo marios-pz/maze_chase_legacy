@@ -1,22 +1,23 @@
-CXX = g++
-CXXFLAGS = -Wall -std=c++11
-LDFLAGS = -lncursesw
-SRCS = diamond.cpp engine.cpp entities.cpp malph.cpp moving.cpp poter.cpp
-OBJS = $(SRCS:.cpp=.o)
-TARGET = game
-
+CC := g++
+CFLAGS := -std=c++11 -Wall
+SRC_DIR := src
+BIN_DIR := bin
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(BIN_DIR)/%.o)
+TARGET := $(BIN_DIR)/maze_curses
+LDFLAGS := -lncurses
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS) $(LDFLAGS)
+$(TARGET): $(OBJS) | $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BIN_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -lncurses
+
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	$(RM) -r $(BIN_DIR)
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-run: $(TARGET)
-	./$(TARGET)
-
-.PHONY: all clean run
+.PHONY: all clean
